@@ -1,0 +1,15 @@
+scikit-learn
+ipykernel
+pandas
+numpy
+lxml
+html5lib
+beautifulsoup4
+matplotlib
+seaborn
+imbalanced-learn
+kagglehub
+scipy
+ucimlrepo
+tabulate
+-e .

@@ -1,0 +1,4 @@
+{
+  "log_dir": "src/logs",
+  "log_file": "app.log"
+}
