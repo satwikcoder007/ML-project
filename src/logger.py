@@ -37,9 +37,5 @@ handler.setFormatter(formatter)
 if not logger.handlers:  # Prevent duplicate handlers if re-imported
     logger.addHandler(handler)
 
-# Shortcut function for logging exceptions
-def log_exception(exc: Exception, message: str = "An error occurred"):
-    logger.error(f"{message}: {exc}", exc_info=True)
-
 # Export logger
-__all__ = ["logger", "log_exception"]
+__all__ = ["logger"]
