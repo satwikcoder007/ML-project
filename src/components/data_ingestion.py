@@ -6,6 +6,8 @@ import numpy as np
 
 from src.logger import logger
 from src.exceptions import CustomException   
+
+from src.components.data_transformation import DataTransformation
 from pathlib import Path
 
 from sklearn.model_selection import train_test_split
@@ -16,7 +18,7 @@ class DataIngestionConfig:  ## This will declare where to store different data
         self.raw_data_path = os.path.join('artifacts', 'data.csv')  
         self.train_data_path = os.path.join('artifacts', 'train.csv')
         self.test_data_path = os.path.join('artifacts', 'test.csv')
-        self.data_path = Path(__file__).parent.parent.parent / 'notebooks/data/stud.csv'
+        self.data_path = Path(__file__).resolve().parent.parent.parent / 'notebooks/data/stud.csv'
 
 class DataIngestion:
     def __init__(self):
@@ -53,9 +55,13 @@ class DataIngestion:
 
 if __name__ == "__main__":  ## this __name__ == "__main__" means that this part of the code will be executed only if this script is run directly
                             ## this is like main function
-    obj = DataIngestion()
-    
+
+    data_ingestion = DataIngestion()
+    data_transformation = DataTransformation()
+
     try:
-        obj.initiate_data_ingestion()
+        config = data_ingestion.initiate_data_ingestion()
+        data_transformation.initiate_data_transformation(config.train_data_path, config.test_data_path)
+        
     except CustomException as e:
         e.log()
