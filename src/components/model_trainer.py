@@ -5,7 +5,7 @@ import numpy as np
 import pathlib
 from src.exceptions import CustomException
 from src.logger import logger
-from src.utils import model_train
+from src.utils import model_train,model_train_with_params
 
 from sklearn.linear_model import LinearRegression 
 from sklearn.tree import DecisionTreeRegressor
@@ -42,8 +42,32 @@ class ModelTrainer:
             "KNN": KNeighborsRegressor()
         }
 
+        param_grids = {
+            "Linear Regression": {},
+            "Decision Tree": {
+                "max_depth": [3, 5, 7, None],
+                "min_samples_split": [2, 5, 10]
+            },
+            "Random Forest": {
+                "n_estimators": [50, 100],
+                "max_depth": [None, 10, 20]
+            },
+            "AdaBoost": {
+                "n_estimators": [50, 100],
+                "learning_rate": [0.01, 0.1, 1.0]
+            },
+            "Gradient Boosting": {
+                "n_estimators": [50, 100],
+                "learning_rate": [0.01, 0.1, 0.2]
+            },
+            "KNN": {
+                "n_neighbors": [3, 5, 7],
+                "weights": ["uniform", "distance"]
+            }
+        }
+
         try:
-            model_report = model_train(X_train,y_train,X_test,y_test,models)
+            model_report = model_train_with_params(X_train,y_train,X_test,y_test,models, param_grids)
             best_model_name = max(model_report, key= lambda name: model_report[name]["score"])
 
             best_model = model_report[best_model_name]["model"]
