@@ -12,5 +12,5 @@ kagglehub
 scipy
 ucimlrepo
 tabulate
-xgboost
+flask
 -e .
