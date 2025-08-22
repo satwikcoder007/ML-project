@@ -8,6 +8,7 @@ from src.logger import logger
 from src.exceptions import CustomException   
 
 from src.components.data_transformation import DataTransformation
+from src.components.model_trainer import ModelTrainer
 from pathlib import Path
 
 from sklearn.model_selection import train_test_split
@@ -58,10 +59,12 @@ if __name__ == "__main__":  ## this __name__ == "__main__" means that this part 
 
     data_ingestion = DataIngestion()
     data_transformation = DataTransformation()
+    model_trainer = ModelTrainer()
 
     try:
         config = data_ingestion.initiate_data_ingestion()
-        data_transformation.initiate_data_transformation(config.train_data_path, config.test_data_path)
+        X_train,y_train,X_test,y_test = data_transformation.initiate_data_transformation(config.train_data_path, config.test_data_path)
+        model_trainer.initiate_training(X_train, y_train, X_test, y_test)
         
     except CustomException as e:
         e.log()
