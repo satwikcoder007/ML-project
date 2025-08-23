@@ -1,5 +1,5 @@
 from flask import Flask,request,jsonify,render_template
-from src.pipeline.predict_pipeline import CustomData,PredictPipeline
+from src.pipeline.predict_pipeline import PredictPipeline
 from src.logger import logger
 from src.exceptions import CustomException
 
@@ -26,9 +26,8 @@ def predict_input_data():
             'writing_score': float(request.form.get('writing_score'))
         }
 
-        custom_data = CustomData(data)
-        data_df = custom_data.get_data_as_dataframe()
-        predict = PredictPipeline(data_df)
+        
+        predict = PredictPipeline(data)
         results = predict.predict()
         result = results[0]
         return render_template("home.html", prediction=result)

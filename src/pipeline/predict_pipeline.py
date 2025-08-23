@@ -8,8 +8,9 @@ from src.logger import logger
 
 
 class PredictPipeline():
-    def __init__(self,df):
-        self.df = df
+    def __init__(self,data):
+        self.custom_data = CustomData(data)
+        self.df = self.custom_data.get_data_as_dataframe()
         self.model_path = os.path.join("artifacts","model.pkl")
         self.preprocessor_path = os.path.join("artifacts","preprocessor.pkl")
 
